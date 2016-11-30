@@ -1,0 +1,208 @@
+ Return the number of integers within the range [A..B] that are divisible by K.
+
+Args: - A: is an integer within the range [0..2,000,000,000] - B: is an integer within the range [0..2,000,000,000] and A <= B - K: is an integer within the range [1..2,000,000,000]
+ 
+MY SOLUTION (THINKING IN CODE) (100% correctness, 0%performance!, time complexity O(B-A)
+class Solution {
+    public int solution(int A, int B, int K) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        int result = 0;
+
+        for (int i=A; i<=B; i++)
+        {
+          if (A[i]%K == 0) count++;
+        }
+
+        return result;
+    }
+
+
+MATHEMATICAL SOLUTION (100%, time complexity O(1))
+class Solution {
+    public int solution(int A, int B, int K) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+         int result = 0;
+
+        if (A%K == 0) {
+          result = ((B-A)/K)+1;
+        } else {
+          result = (B/K - ((A/K)+1))+1;
+        }
+
+        return result;
+    }
+-----------------------------------------------------------------------------------------------------------------------------------
+  public static int FrogJump(int X, int Y, int D)
+        {
+            if ((Y - X) % D == 0)
+            {
+                return (Y - X) / D;
+            }
+            return (Y - X) / D + 1;
+
+       }
+	   
+	   or
+
+Solution for reference:
+
+public int solution(int X, int Y, int D) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        return (int)Math.Ceiling((double)Math.Abs(X - Y) / (double)D);
+    }
+-----------------------------------------------------------------------------------------------------------------------------------
+PermMissingElem- Painless
+
+public static int solution(int[] A)
+        {
+            // write your code in C# 6.0 with .NET 4.5 (Mono)
+            if (A.Length != 0 && A.Length == 1)
+                return A[0] == 1 ? 2 : 1;
+            else if (A.Length != 0 && A.Length > 1)
+            {
+                Array.Sort(A);
+                if (A[0] != 1)
+                    return 1;
+                else
+                {
+                    for (int i = 0; i < A.Length - 1; i++)
+                    {
+                        if (A[i + 1] - A[i] > 1)
+                            return A[i] + 1;
+                    }
+                }
+                return A.Length + 1;
+            }
+            return 1;
+        }
+		
+------------------------------------------------------------------------------------------------------------------------------------
+
+TapeEquilibrium - Painless
+
+private static int solution(int[] A)
+        {
+            long sumleft = A[0];
+            long sumright = A.Sum() - A[0]; //using System.Linq;
+            long minDiff = Math.Abs(sumright - sumleft);
+            long thisDiff = 0;
+            for (int i = 1; i < A.Length-1; i++)
+            {
+                sumleft = sumleft + A[i];
+                sumright = sumright - A[i];
+                thisDiff = Math.Abs(sumright - sumleft);
+                if (thisDiff < minDiff)
+                {
+                    minDiff = thisDiff;
+                }
+            }
+            return (int)minDiff;
+        }
+-----------------------------------------------------------------------------------------------------------------------------------------
+class Program
+{
+    static int count = 0;
+    static int MainTreeNodeValue = 0;
+
+    static void Main(string[] args)
+    {
+        Tree mainT = new Tree();
+
+        mainT.x = 8;
+        mainT.l = new Tree();
+        mainT.r = new Tree();
+
+        mainT.l.x = 9;
+        mainT.r.x = 6;
+
+        mainT.l.l = new Tree();
+        mainT.l.l.x = 9;
+
+        mainT.l.r = new Tree();
+        mainT.l.r.x = 9;
+
+        int finalCount = solution(mainT);
+
+        Console.WriteLine(finalCount);
+        Console.ReadLine();
+
+    }
+
+    public static int solution(Tree T)
+    {
+
+                if (MainTreeNodeValue == 0)
+                    MainTreeNodeValue = T.x;
+
+                if (T.x >= MainTreeNodeValue)
+                        count++;
+
+                if (T.l != null && T.l.x >= T.x && T.l.x >= MainTreeNodeValue)
+                    count++;
+
+                if (T.r != null && T.r.x >= T.x && T.r.x >= MainTreeNodeValue)
+                    count++;
+
+                if (T.l != null && T.l.l != null && !(T.l.x >= MainTreeNodeValue))
+                   solution(T.l);
+
+
+                if (T.l != null && T.l.r != null && !(T.r.x >= MainTreeNodeValue))
+                    solution(T.r);
+
+
+        return count;
+    }
+}
+
+class Tree
+{
+    public int x;
+    public Tree l;
+    public Tree r;
+}
+-----------------------------------------------------------------------------------------------------------------------------		
+Sum the Value
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var list = new[] {-7, 1, 5, 2, -4, 3, 0};
+            Console.WriteLine(equi(list));
+            Console.ReadLine();
+        }
+
+			  private static ArrayList equi(int[] A)
+		{
+			ArrayList answer = new ArrayList();
+
+			//if(A == null) return -1; 
+			if ((answer.Count == null))
+			{
+				answer.Add(-1);
+				return answer;
+			}
+
+			long sum0 = 0, sum1 = 0;
+			for (int i = 0; i < A.Length; i++) sum0 += A[i];
+			for (int i = 0; i < A.Length; i++)
+			{
+				sum0 -= A[i];
+				if (i > 0) { sum1 += A[i - 1]; }
+				if (sum1 == sum0) answer.Add(i);
+			//return i;
+			}
+			//return -1;
+			return answer;
+		}
+    }
+}
+		
